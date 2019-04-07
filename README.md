@@ -2,6 +2,6 @@
 
 Author: Sean Doyle
 
-##scripts
+## scripts
 
 `npm run rev` will start the server and client on localhost:3000
