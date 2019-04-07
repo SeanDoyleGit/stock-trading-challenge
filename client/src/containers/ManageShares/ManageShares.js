@@ -20,11 +20,7 @@ class ManageShares extends Component {
 
     handleSearchValueChange = (event) => {
         this.props.setSearchValue(event.target.value);
-        if(event.target.value) {
-            this.fetchShares(event.target.value);
-        } else {
-            this.fetchShares.cancel();
-        }
+        this.fetchShares(event.target.value);
     }
 
     handleSharePurchase = (data) => {

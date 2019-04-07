@@ -20,6 +20,10 @@ class User {
     }
 
     purchaseShares(shares) {
+        if(shares.amount * shares.value > this.balance) {
+            return;
+        } 
+        
         let currentShares = this.shares.find(share => share.symbol === shares.symbol);
         if(currentShares) {
             currentShares.amount += shares.amount;
