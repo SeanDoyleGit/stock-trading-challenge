@@ -1,0 +1,9 @@
+.manage-balance {
+    text-align: center;
+    padding: 20px;
+}
+
+.manage-balance__form-container {
+    width: 50%;
+    margin: auto;
+}
