@@ -5,6 +5,7 @@ import green from '@material-ui/core/colors/green';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -25,15 +26,25 @@ class Share extends Component {
     state = {
         cost: 0,
         amountOfShares: 0,
-        preventPurchase: true
+        preventTransaction: true
+    }
+    
+    componentDidMount() {
+        this.props.fetchShareValue(this.props);
     }
 
     handleAmountChange = (event) => {
-        const amountOfShares = event.target.value;
-        const cost = event.target.value * this.props.value;
-        const preventPurchase = (!Number.isInteger(amountOfShares) || isNaN(cost) || cost > this.props.currentBalance);
+        const amountOfShares = parseInt(event.target.value);
+        const cost = amountOfShares * this.props.value;
+        const preventTransaction = (
+            !Number.isInteger(amountOfShares) || 
+            amountOfShares < 0 ||
+            amountOfShares > this.props.amount ||
+            isNaN(cost) || 
+            cost > this.props.currentBalance
+        );
 
-        this.setState({ amountOfShares, cost, preventPurchase });
+        this.setState({ amountOfShares, cost, preventTransaction });
     }
 
     purchaseShare = () => {
@@ -54,34 +65,60 @@ class Share extends Component {
         });
     }
 
-    componentDidMount() {
-        this.props.fetchShareValue(this.props);
+    sellShare = () => {
+        this.setState({
+            cost: 0,
+            amountOfShares: 0,
+        })
+
+        const params = {
+            name: this.props.name,
+            databaseCode: this.props.databaseCode,
+            symbol: this.props.symbol,
+            amount: this.state.amountOfShares
+        };
+
+        axios.post('/sellShare', params).then(response => {
+            this.props.onSell(response.data);
+        });
     }
 
     render() {
+        let { name, symbol, value, amount, currentBalance, onPurchase } = this.props;
+
         return (
             <div className="share">
                 <Card className='share-container'>
                     <StyledHeader 
-                        title={this.props.name}
-                        subheader={this.props.symbol}
+                        title={name}
+                        subheader={symbol}
                     />
                     <CardContent>
                         <Typography gutterBottom variant='h6'>
-                            value: {this.props.value ? <span style={{color: green[500]}}>${this.props.value}</span> : '...Loading'}
+                            value: {value ? <span style={{color: green[500]}}>${value}</span> : '...Loading'}
                         </Typography>
                         <FormControl>
                             <InputLabel>Amount</InputLabel>
                             <Input
                                 id='amount'
+                                type="number"
                                 value={this.state.amountOfShares}
                                 onChange={this.handleAmountChange}
+                                endAdornment={ onPurchase ? null : <InputAdornment position='end'>/{amount}</InputAdornment>}
                             />
                         </FormControl>
-                        <Button classes={{ root: 'share__buy-button' }} onClick={this.purchaseShare} variant="contained" color="secondary" disabled={this.state.preventPurchase}>Buy</Button>
+                        <Button 
+                            classes={{ root: `${onPurchase ? 'share__buy-button' : 'share__sell-button'}` }}
+                            onClick={onPurchase ? this.purchaseShare : this.sellShare}
+                            variant="contained"
+                            color="secondary"
+                            disabled={this.state.preventTransaction}
+                        >
+                            {onPurchase ? 'Buy' : 'Sell'}
+                        </Button>
                         <div className='share__balance-container'>
-                            <Typography classes={{ root: 'share__balance-container__balance' }} gutterBottom variant='h6'>Balance: ${this.props.currentBalance}</Typography>
-                            <Typography classes={{ root: 'share__balance-container__cost' }} gutterBottom variant='h6'>Cost: ${this.state.cost}</Typography>
+                            <Typography classes={{ root: 'share__balance-container__balance' }} gutterBottom variant='h6'>Balance: ${currentBalance}</Typography>
+                            <Typography classes={{ root: 'share__balance-container__cost' }} gutterBottom variant='h6'>{onPurchase ? 'Cost' : 'Profit'}: ${this.state.cost}</Typography>
                         </div>
                     </CardContent>
                 </Card>

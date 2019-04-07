@@ -22,3 +22,11 @@ export const fetchBalance = () => {
         });
     };
 };
+
+export const fetchShares = () => {
+    return dispatch => {
+        axios.get('/shares').then(response => {
+            dispatch(setPortfolioShares(response.data.shares));
+        });
+    };
+};

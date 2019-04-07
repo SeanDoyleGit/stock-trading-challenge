@@ -77,6 +77,7 @@ export class UpdateBalanceForm extends Component {
                         <InputLabel>Amount</InputLabel>
                         <Input
                             id='amount'
+                            type="number"
                             value={this.amount}
                             onChange={this.handleAmountChange}
                             startAdornment={<InputAdornment position='start'>$</InputAdornment>}

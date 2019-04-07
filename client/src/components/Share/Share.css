@@ -8,7 +8,18 @@
 .share .share__buy-button {
     vertical-align: bottom;
     width: 100px;
-    margin: 0 35px;
+    margin: 0 0 0 35px;
+}
+
+.share .share__sell-button {
+    vertical-align: bottom;
+    width: 100px;
+    margin: 0 0 0 35px;
+    background-color: #43a047;
+}
+
+.share .share__sell-button:hover {
+    background-color: #388e3c;
 }
 
 .share .share__balance-container {

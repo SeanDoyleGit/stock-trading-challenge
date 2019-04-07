@@ -26,6 +26,10 @@ app.get('/balance', (req, res) => {
     res.send({ balance: user.balance });
 });
 
+app.get('/shares', (req, res) => {
+    res.send({ shares: user.shares });
+});
+
 app.post('/deposit', (req, res) => {
     user.deposit(parseFloat(req.body.amount));
     res.send({ balance: user.balance });
@@ -39,6 +43,13 @@ app.post('/withdraw', (req, res) => {
 app.post('/purchaseShare', (req, res) => {
     requestShareValue(req.body, (shares) => {
         user.purchaseShares(shares);
+        res.send({ balance: user.balance, shares: user.shares });
+    });
+});
+
+app.post('/sellShare', (req, res) => {
+    requestShareValue(req.body, (shares) => {
+        user.sellShares(shares);
         res.send({ balance: user.balance, shares: user.shares });
     });
 });
