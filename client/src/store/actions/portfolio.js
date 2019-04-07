@@ -8,6 +8,13 @@ export const setBalance = ( balance ) => {
     };
 };
 
+export const setPortfolioShares = ( shares ) => {
+    return {
+        type: actionTypes.SET_PORTFOLIO_SHARES,
+        shares
+    };
+};
+
 export const fetchBalance = () => {
     return dispatch => {
         axios.get('/balance').then(response => {

@@ -1,7 +1,8 @@
 import React, { Component } from 'react' 
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import * as actions from '../../store/actions/shares';
+import * as portfolioActions from '../../store/actions/portfolio';
+import * as sharesActions from '../../store/actions/shares';
 import * as selectors from '../../store/selectors';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -26,9 +27,14 @@ class ManageShares extends Component {
         }
     }
 
+    handleSharePurchase = (data) => {
+        this.props.setBalance(data.balance);
+        this.props.setPortfolioShares(data.shares);
+    }
+
     render() {
         let shares = this.props.shares.map(share => {
-            return <Share key={share.symbol} fetchShareValue={this.props.fetchShareValue} {...share}/>
+            return <Share key={share.symbol} fetchShareValue={this.props.fetchShareValue} {...share} onPurchase={this.handleSharePurchase} currentBalance={this.props.currentBalance}/>
         });
 
         return (
@@ -58,9 +64,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setSearchValue: (value) => dispatch(actions.setSearchValue(value)),
-        fetchShares: (searchValue) => dispatch(actions.fetchShares(searchValue)),
-        fetchShareValue: (symbol) => dispatch(actions.fetchShareValue(symbol))
+        setSearchValue: (value) => dispatch(sharesActions.setSearchValue(value)),
+        fetchShares: (searchValue) => dispatch(sharesActions.fetchShares(searchValue)),
+        fetchShareValue: (symbol) => dispatch(sharesActions.fetchShareValue(symbol)),
+        setBalance: (balance) => dispatch(portfolioActions.setBalance(balance)),
+        setPortfolioShares: (shares) => dispatch(portfolioActions.setPortfolioShares(shares))
     };
 };
 

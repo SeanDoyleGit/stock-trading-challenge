@@ -4,3 +4,24 @@
     display: inline-block;
     text-align: left;
 }
+
+.share .share__buy-button {
+    vertical-align: bottom;
+    width: 100px;
+    margin: 0 35px;
+}
+
+.share .share__balance-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+.share .share__balance-container__balance {
+    display: inline-block;
+    width: 63%;
+}
+
+.share .share__balance-container__cost {
+    display: inline-block;
+    width: 37%;
+}

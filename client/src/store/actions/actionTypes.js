@@ -1,4 +1,5 @@
 export const SET_BALANCE = 'SET BALANCE';
+export const SET_PORTFOLIO_SHARES = 'SET PORTFOLIO SHARES';
 export const SET_SEARCH_VALUE = 'SET SEARCH VALUE';
 export const SET_SHARES = 'SET SHARES';
 export const SET_SHARE_VALUE = 'SET SHARE VALUE';

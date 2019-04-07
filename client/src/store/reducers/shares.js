@@ -20,7 +20,7 @@ const reducer = (state = initialState, action) => {
             return {
                 databaseCode: share.database_code,
                 symbol: share.dataset_code,
-                name: share.name
+                name: share.name.replace('Prices, Dividends, Splits and Trading Volume', '')
             };
         });
 
