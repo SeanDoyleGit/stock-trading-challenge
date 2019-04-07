@@ -1,0 +1,6 @@
+.nav-item__link {
+    text-decoration: none;
+    color: inherit;
+    font-weight: inherit;
+    padding: 6px 8px;
+}
