@@ -13,7 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import './UpdateBalanceForm.css';
 
-const StyledButton = withStyles({
+export const StyledButton = withStyles({
     root: {
       marginTop: '20px'
     },
@@ -25,10 +25,9 @@ const StyledFormControl = withStyles({
     },
 })(FormControl);
 
-class UpdateBalanceForm extends Component {
+export class UpdateBalanceForm extends Component {
 
     state = {
-        currentBalance: 500,
         balanceMethod: 'deposit',
         amount: undefined
     };
@@ -48,6 +47,10 @@ class UpdateBalanceForm extends Component {
     handleSubmit = () => { 
         axios.post(`/${this.state.balanceMethod}`, { amount: this.state.amount }).then(response => {
             this.props.onSubmit(response.data.balance);
+        });
+
+        this.setState({
+            amount: undefined
         });
     }
 

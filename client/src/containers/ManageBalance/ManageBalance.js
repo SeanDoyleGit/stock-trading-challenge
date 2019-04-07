@@ -10,7 +10,7 @@ import UpdateBalanceForm from '../../components/UpdateBalanceForm/UpdateBalanceF
 
 import './ManageBalance.css';
 
-class ManageBalance extends Component {
+export class ManageBalance extends Component {
 
     componentDidMount() {
         this.props.fetchBalance();
@@ -21,7 +21,7 @@ class ManageBalance extends Component {
             <div className='manage-balance'>
                 <Card className='manage-balance__form-container'>
                     <CardContent>
-                        <Typography gutterBottom variant='h5' component='h2'> Current Balance ${this.props.currentBalance}</Typography>
+                        <Typography gutterBottom variant='h5' component='h2'>Current Balance ${this.props.currentBalance}</Typography>
                         <UpdateBalanceForm onSubmit={this.props.setBalance}/>
                     </CardContent>
                 </Card>
