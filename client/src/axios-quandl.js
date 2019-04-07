@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'https://www.alphavantage.co/query?'
+    baseURL: 'https://www.quandl.com/api/v3/'
 });
 
 export default instance;

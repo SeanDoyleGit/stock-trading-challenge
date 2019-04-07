@@ -5,8 +5,17 @@
     text-align: left;
 }
 
-.manage-shares__search-container {
+.manage-shares .manage-shares__search-container {
     box-sizing: border-box;
     height: 100%;
     padding: 30px;
+    overflow: auto;
+}
+
+.manage-shares .manage-shares__results-container {
+    overflow: auto;
+}
+
+.manage-shares__results-container__title {
+    text-align: left;
 }

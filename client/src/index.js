@@ -6,11 +6,13 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import App from './App';
 import portfolioReducer from './store/reducers/portfolio';
+import sharesReducer from './store/reducers/shares';
 
 import './index.css';
 
 const rootReducer = combineReducers({
-    portfolio: portfolioReducer
+    portfolio: portfolioReducer,
+    shares: sharesReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
