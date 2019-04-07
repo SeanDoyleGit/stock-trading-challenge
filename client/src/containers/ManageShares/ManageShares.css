@@ -1,0 +1,12 @@
+.manage-shares {
+    box-sizing: border-box;
+    padding: 20px;
+    height: 100%;
+    text-align: left;
+}
+
+.manage-shares__search-container {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 30px;
+}
