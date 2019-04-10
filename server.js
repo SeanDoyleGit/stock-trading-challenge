@@ -15,7 +15,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get('/balance', (req, res) => {
-    console.log('/balance', user.balance);
     res.send({ balance: user.balance });
 });
 
@@ -25,20 +24,17 @@ app.get('/shares', (req, res) => {
 
 app.post('/deposit', (req, res) => {
     user.deposit(parseFloat(req.body.amount));
-    console.log('/deposit', user.balance);
     res.send({ balance: user.balance });
 });
 
 app.post('/withdraw', (req, res) => {
     user.withdraw(parseFloat(req.body.amount));
-    console.log('/withdraw', user.balance);
     res.send({ balance: user.balance });
 });
 
 app.post('/purchaseShare', (req, res) => {
     requestShareValue(req.body, (shares) => {
         user.purchaseShares(shares);
-        console.log('/purchaseShare', user.balance);
         res.send({ balance: user.balance, shares: user.shares });
     });
 });
@@ -46,7 +42,6 @@ app.post('/purchaseShare', (req, res) => {
 app.post('/sellShare', (req, res) => {
     requestShareValue(req.body, (shares) => {
         user.sellShares(shares);
-        console.log('/sellShare', user.balance);
         res.send({ balance: user.balance, shares: user.shares });
     });
 });

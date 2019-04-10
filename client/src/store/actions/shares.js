@@ -43,7 +43,6 @@ function requestShareValue(dispatch, share) {
     axios.get(`datasets/${share.databaseCode}/${share.symbol}/data.json?api_key=${apiKeys.quandl}`, { headers: { 'Access-Control-Allow-Origin': '*' }}).then(response => {
         try {
             let value = parseFloat(response.data.dataset_data.data[0][4]);
-            console.log(value);
             dispatch(setShareValue(share.symbol, value));
         } catch(error) {
             console.error('Caught Error:', error);

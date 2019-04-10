@@ -10,7 +10,6 @@ const reducer = (state = initialState, action) => {
 
     if(action.type === actionTypes.SET_BALANCE) {
         let newState = _.cloneDeep(state);
-        console.log('SET_BALANCE', action.balance);
         newState.balance = action.balance;
         return newState;
     }
