@@ -17,7 +17,7 @@ export const setPortfolioShares = ( shares ) => {
 
 export const fetchBalance = () => {
     return dispatch => {
-        axios.get('/balance').then(response => {
+        axios.get('/user-balance').then(response => {
             console.log('fetch balance', response);
             dispatch(setBalance(response.data.balance));
         });
