@@ -14,14 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-if(process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'client/build')));
-  
-    app.get('*', (req, res) => {
-        res.sendfile(path.join(__dirname = 'client/build/index.html'));
-    });
-}
-
 app.get('/balance', (req, res) => {
     console.log('/balance', user.balance);
     res.send({ balance: user.balance });
@@ -58,6 +50,14 @@ app.post('/sellShare', (req, res) => {
         res.send({ balance: user.balance, shares: user.shares });
     });
 });
+
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client/build')));
+  
+    app.get('*', (req, res) => {
+        res.sendfile(path.join(__dirname = 'client/build/index.html'));
+    });
+}
 
 app.listen(port, (req, res) => {
     user = new User();
