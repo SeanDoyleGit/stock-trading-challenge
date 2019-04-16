@@ -8,6 +8,7 @@ class User {
     deposit(amount) {
         if(isNaN(amount)) { return; }
         this.balance += amount;
+        this.balance = parseFloat(this.balance.toFixed(2));
     }
 
     withdraw(amount) {
@@ -17,22 +18,24 @@ class User {
         if(this.balance < 0) {
             this.balance = 0;
         }
+        this.balance = parseFloat(this.balance.toFixed(2));
     }
 
     purchaseShares(shares) {
-        if(shares.amount * shares.value > this.balance) {
+        if(shares.amount * shares.price > this.balance) {
             return;
         } 
         
         let currentShares = this.shares.find(share => share.symbol === shares.symbol);
         if(currentShares) {
             currentShares.amount += shares.amount;
-            currentShares.value = shares.value;
+            currentShares.price = shares.price;
         } else {
             this.shares.push(shares);
         }
 
-        this.balance -= shares.amount * shares.value;
+        this.balance -= shares.amount * shares.price;
+        this.balance = parseFloat(this.balance.toFixed(2));
 
         if(this.balance < 0) {
             this.balance = 0;
@@ -42,12 +45,14 @@ class User {
     sellShares(shares) {
         let currentShares = this.shares.find(share => share.symbol === shares.symbol);
         if(currentShares && shares.amount >= currentShares.amount) {
-            this.balance += shares.amount * shares.value;
+            this.balance += shares.amount * shares.price;
             this.shares.splice(this.shares.findIndex(share => share.symbol === shares.symbol), 1);
         } else if(currentShares) {
-            this.balance += shares.amount * shares.value;
+            this.balance += shares.amount * shares.price;
             currentShares.amount -= shares.amount;
         }
+
+        this.balance = parseFloat(this.balance.toFixed(2));
     }
 }
 

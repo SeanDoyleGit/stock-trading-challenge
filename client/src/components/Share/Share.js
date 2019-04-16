@@ -17,8 +17,12 @@ import './Share.css';
 export const StyledHeader = withStyles({
     root: {
         height: '60px',
-        alignItems: 'initial'
+        alignItems: 'initial',
     },
+    title: {
+        maxHeight: '60px',
+        overflow: 'hidden'
+    }
 })(CardHeader);
 
 class Share extends Component {
@@ -35,7 +39,7 @@ class Share extends Component {
 
     handleAmountChange = (event) => {
         const amountOfShares = parseInt(event.target.value);
-        const cost = amountOfShares * this.props.value;
+        const cost = amountOfShares * this.props.price;
         const preventTransaction = (
             !Number.isInteger(amountOfShares) || 
             amountOfShares < 0 ||
@@ -60,7 +64,7 @@ class Share extends Component {
             amount: this.state.amountOfShares
         };
 
-        axios.post('/purchaseShare', params).then(response => {
+        axios.post('/post-purchase', params).then(response => {
             this.props.onPurchase(response.data);
         });
     }
@@ -78,13 +82,13 @@ class Share extends Component {
             amount: this.state.amountOfShares
         };
 
-        axios.post('/sellShare', params).then(response => {
+        axios.post('/post-sell', params).then(response => {
             this.props.onSell(response.data);
         });
     }
 
     render() {
-        let { name, symbol, value, amount, currentBalance, onPurchase } = this.props;
+        let { name, symbol, price, amount, currentBalance, onPurchase } = this.props;
 
         return (
             <div className="share">
@@ -95,7 +99,7 @@ class Share extends Component {
                     />
                     <CardContent>
                         <Typography gutterBottom variant='h6'>
-                            value: {value ? <span style={{color: green[500]}}>${value}</span> : '...Loading'}
+                            value: {price ? <span style={{color: green[500]}}>${price}</span> : '...Loading'}
                         </Typography>
                         <FormControl>
                             <InputLabel>Amount</InputLabel>

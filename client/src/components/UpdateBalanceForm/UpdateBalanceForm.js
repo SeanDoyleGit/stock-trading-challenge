@@ -45,7 +45,7 @@ export class UpdateBalanceForm extends Component {
     }
 
     handleSubmit = () => { 
-        axios.post(`/${this.state.balanceMethod}`, { amount: this.state.amount }).then(response => {
+        axios.post(`/post-${this.state.balanceMethod}`, { amount: this.state.amount }).then(response => {
             this.props.onSubmit(response.data.balance);
         });
 

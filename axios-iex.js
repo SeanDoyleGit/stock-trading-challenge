@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const instance = axios.create({
-    baseURL: 'https://www.quandl.com/api/v3/'
+    baseURL: 'https://api.iextrading.com/1.0/'
 });
 
 module.exports.instance = instance;

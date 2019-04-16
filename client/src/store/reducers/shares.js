@@ -16,23 +16,17 @@ const reducer = (state = initialState, action) => {
 
     if(action.type === actionTypes.SET_SHARES) {
         let newState = _.cloneDeep(state);
-        newState.shares = (action.shares || []).map(share => {
-            return {
-                databaseCode: share.database_code,
-                symbol: share.dataset_code,
-                name: share.name.replace('Prices, Dividends, Splits and Trading Volume', '')
-            };
-        });
+        newState.shares = action.shares;
 
         return newState;
     }
     
-    if(action.type === actionTypes.SET_SHARE_VALUE) {
+    if(action.type === actionTypes.SET_SHARE_PRICE) {
         let newState = _.cloneDeep(state);
         let share = newState.shares.find(share => share.symbol === action.symbol);
         
         if(share) {
-            share.value = action.value;
+            share.price = action.price;
         }
 
         return newState;
