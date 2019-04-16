@@ -26,7 +26,6 @@ export const setShareValue = ( symbol, price ) => {
 export const fetchShares = (value) => {
     return dispatch => {
         axios.get(`/get-shares-search?searchTerm=${value}&amount=10`).then(response => {
-            console.log(response);
             dispatch(setShares(response.data.shares));
         });
     };
@@ -41,7 +40,6 @@ export const fetchShareValue = (share) => {
 function requestShareValue(dispatch, share) {
     axios.get(`/get-share-price?symbol=${share.symbol}`).then(response => {
         try {
-            console.log(response);
             dispatch(setShareValue(share.symbol, response.data.price));
         } catch(error) {
             console.error('Caught Error:', error);

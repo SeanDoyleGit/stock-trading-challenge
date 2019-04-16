@@ -18,7 +18,6 @@ export const setPortfolioShares = ( shares ) => {
 export const fetchBalance = () => {
     return dispatch => {
         axios.get('/get-balance').then(response => {
-            console.log(response);
             dispatch(setBalance(response.data.balance));
         });
     };
@@ -27,7 +26,6 @@ export const fetchBalance = () => {
 export const fetchShares = () => {
     return dispatch => {
         axios.get('/get-shares').then(response => {
-            console.log(response);
             dispatch(setPortfolioShares(response.data.shares));
         });
     };

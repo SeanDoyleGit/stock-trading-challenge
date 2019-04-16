@@ -11,6 +11,7 @@ import NavItem from './components/NavItem/NavItem';
 import Portfolio from './containers/Portfolio/Portfolio';
 import ManageShares from './containers/ManageShares/ManageShares';
 import ManageBalance from './containers/ManageBalance/ManageBalance';
+import TransactionHistory from './containers/TransactionHistory/TransactionHistory';
 import './App.css';
 
 const theme = createMuiTheme({
@@ -31,16 +32,18 @@ class App extends Component {
     return (
       <div className="App">
         <MuiThemeProvider theme={theme}>
-          <Header>
+          <Header balance={this.props.currentBalance}>
             <NavItem link="/" exact>Portfolio</NavItem>
             <NavItem link="/balance" exact>Balance</NavItem>
             <NavItem link="/shares" exact>Shares</NavItem>
+            <NavItem link="/history" exact>History</NavItem>
           </Header>
           
           <div className="main">
             <Switch>
               <Route path="/balance" component={ManageBalance} />
               <Route path="/shares" component={ManageShares} />
+              <Route path="/history" component={TransactionHistory} />
               <Route path="/" component={Portfolio} />
             </Switch>
           </div>
