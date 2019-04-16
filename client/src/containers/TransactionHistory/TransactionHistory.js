@@ -10,17 +10,19 @@ class Portfolio extends Component {
     }
 
     render() {
-        let history = this.props.history.map(transaction => {
+        let history = this.props.history.map((transaction, index) => {
             return (
-                <div style={{margin: '10px', border: '1px solid black' }}>
-                    <h1>{transaction.name}</h1>
-                    <p>{transaction.symbol}</p>
-                    <p>{transaction.amount}</p>
-                    <p>{transaction.price}</p>
-                    <p>{transaction.timestamp}</p>
-                    {
-                        transaction.purchase ? <p>BUY</p> : <p>SELL</p>
-                    }
+                <div key={index} style={{margin: '10px', border: '1px solid black' }}>
+                    <div style={{ textAlign: 'left', width: '400px', margin: 'auto' }}>
+                        <h1>{transaction.name}</h1>
+                        <p>{transaction.symbol}</p>
+                        <p>amount: {transaction.amount}</p>
+                        <p>price: ${transaction.price}</p>
+                        <p>{transaction.timestamp}</p>
+                        {
+                            transaction.purchase ? <p>BUY</p> : <p>SELL</p>
+                        }
+                    </div>
                 </div>
             );
         });
