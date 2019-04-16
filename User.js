@@ -21,7 +21,7 @@ class User {
 
     purchaseShares(shares) {
         if(shares.amount * shares.value > this.balance) {
-            return;
+            return false;
         } 
         
         let currentShares = this.shares.find(share => share.symbol === shares.symbol);
@@ -37,6 +37,8 @@ class User {
         if(this.balance < 0) {
             this.balance = 0;
         }
+
+        return true;
     }
 
     sellShares(shares) {

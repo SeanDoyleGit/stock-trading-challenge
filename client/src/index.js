@@ -7,12 +7,14 @@ import thunk from 'redux-thunk';
 import App from './App';
 import portfolioReducer from './store/reducers/portfolio';
 import sharesReducer from './store/reducers/shares';
+import transactionHistoryReducer from './store/reducers/transactionHistory';
 
 import './index.css';
 
 const rootReducer = combineReducers({
     portfolio: portfolioReducer,
-    shares: sharesReducer
+    shares: sharesReducer,
+    transactionHistory: transactionHistoryReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

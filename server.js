@@ -6,8 +6,10 @@ const app = express();
 const path = require('path');
 const port = process.env.PORT || 5000;
 const User = require('./User.js').User;
+const TransactionHistory = require('./TransactionHistory.js').TransactionHistory;
 
 var user;
+var transactionHistory;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,6 +28,10 @@ app.get('/balance', (req, res) => {
     res.send({ balance: user.balance });
 });
 
+app.get('/transaction-history', (req, res) => {
+    res.send({ history: transactionHistory.history });
+});
+
 app.get('/shares', (req, res) => {
     res.send({ shares: user.shares });
 });
@@ -42,7 +48,9 @@ app.post('/withdraw', (req, res) => {
 
 app.post('/purchaseShare', (req, res) => {
     requestShareValue(req.body, (shares) => {
-        user.purchaseShares(shares);
+        if(user.purchaseShares(shares)) {
+            transactionHistory.addTransaction({ ...shares, purchase: true, timestamp: (new Date()).toISOString() });
+        }
         res.send({ balance: user.balance, shares: user.shares });
     });
 });
@@ -50,12 +58,14 @@ app.post('/purchaseShare', (req, res) => {
 app.post('/sellShare', (req, res) => {
     requestShareValue(req.body, (shares) => {
         user.sellShares(shares);
+        transactionHistory.addTransaction({ ...shares, purchase: false, timestamp: (new Date()).toISOString() });
         res.send({ balance: user.balance, shares: user.shares });
     });
 });
 
 app.listen(port, (req, res) => {
     user = new User();
+    transactionHistory = new TransactionHistory();
 
     console.log( `server listening on port: ${port}`);
 });

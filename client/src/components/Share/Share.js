@@ -36,13 +36,16 @@ class Share extends Component {
     handleAmountChange = (event) => {
         const amountOfShares = parseInt(event.target.value);
         const cost = amountOfShares * this.props.value;
-        const preventTransaction = (
+        let preventTransaction = (
             !Number.isInteger(amountOfShares) || 
             amountOfShares < 0 ||
             amountOfShares > this.props.amount ||
-            isNaN(cost) || 
-            cost > this.props.currentBalance
+            isNaN(cost)
         );
+        
+        if(this.props.onPurchase && cost > this.props.currentBalance) {
+            preventTransaction = true;
+        } 
 
         this.setState({ amountOfShares, cost, preventTransaction });
     }
@@ -84,7 +87,7 @@ class Share extends Component {
     }
 
     render() {
-        let { name, symbol, value, amount, currentBalance, onPurchase } = this.props;
+        let { name, symbol, value, amount, onPurchase } = this.props;
 
         return (
             <div className="share">
@@ -117,7 +120,6 @@ class Share extends Component {
                             {onPurchase ? 'Buy' : 'Sell'}
                         </Button>
                         <div className='share__balance-container'>
-                            <Typography classes={{ root: 'share__balance-container__balance' }} gutterBottom variant='h6'>Balance: ${currentBalance}</Typography>
                             <Typography classes={{ root: 'share__balance-container__cost' }} gutterBottom variant='h6'>{onPurchase ? 'Cost' : 'Profit'}: ${this.state.cost}</Typography>
                         </div>
                     </CardContent>
